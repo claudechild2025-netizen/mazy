@@ -60,6 +60,21 @@ const config: Config = {
         hero: '0 8px 24px -8px rgba(232, 180, 0, 0.35)',
         cta:  '0 6px 16px -6px rgba(26, 26, 26, 0.30)',
       },
+      keyframes: {
+        shake: {
+          '0%, 100%':       { transform: 'translateX(0)' },
+          '20%, 60%':       { transform: 'translateX(-6px)' },
+          '40%, 80%':       { transform: 'translateX(6px)' },
+        },
+        pulse: {
+          '0%, 100%': { transform: 'scale(1)',    opacity: '1'   },
+          '50%':      { transform: 'scale(1.05)', opacity: '0.95' },
+        },
+      },
+      animation: {
+        shake:      'shake 380ms ease-in-out',
+        'pulse-soft': 'pulse 1800ms ease-in-out infinite',
+      },
     },
   },
   plugins: [],

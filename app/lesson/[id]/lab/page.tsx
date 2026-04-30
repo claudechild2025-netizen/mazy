@@ -26,9 +26,9 @@ export default function LessonLabPage() {
 
   if (!lesson) notFound();
 
-  const goToQuiz = () => {
+  const goToDistill = () => {
     track('cta_tap', { surface: 'lesson_lab', label: 'continue', lesson: id });
-    router.push(`/quiz?lesson=${id}&q=1`);
+    router.push(`/lesson/${id}/distill`);
   };
 
   return (
@@ -53,7 +53,7 @@ export default function LessonLabPage() {
 
       <button
         type="button"
-        onClick={goToQuiz}
+        onClick={goToDistill}
         className="mt-auto flex h-12 w-full items-center justify-between rounded-pill bg-ink-900 px-5 font-display text-base font-semibold text-paper"
       >
         <span>Үргэлжлүүлэх</span>
