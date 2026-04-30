@@ -8,11 +8,9 @@ import { supabase } from '@/lib/supabase';
 /*
   /survey — post-lesson research questionnaire (7 questions, one-per-screen).
 
-  Per MAZY_FINAL_PROMPT §6:
-    - Auto-advance after each Likert tap (no extra "next" press)
-    - Open answer Q6 + Consent Q7 use the BLACK CTA pill ("Үргэлжлүүлэх →")
-    - Progress dots reflect step / total
-    - Final submit inserts one row into `survey_responses` with all answers in JSONB
+  Likert questions use a compact horizontal 1–5 scale labelled at the
+  endpoints — easier to scan on a phone than five stacked rows. Open and
+  consent questions keep the black CTA pill.
 */
 
 type Question =
@@ -24,47 +22,44 @@ const QUESTIONS: Question[] = [
   {
     type: 'likert',
     id: 'q1_motion_graphic',
-    text: 'Хичээлийн хөдөлгөөнт хэлбэрээр (анимаци, чирэх) өнцгийг гэрэл толинд тусгаж үзүүлэх нь номноос үнэлгээтэй сурдаг, тайлбар ойлгомжтой.',
+    text: 'Анимаци ба чирэх хэлбэр номноос илүү ойлгомжтой санагдсан.',
   },
   {
     type: 'likert',
     id: 'q2_visual_clarity',
-    text: 'Дэлгэцийн дүрст мэдээлэл (текст, өнгө, томруу) тэнцвэртэй харагдсан, нүд чилэхгүй, толгой эргэх мэдрэмж төрөөгүй.',
+    text: 'Дэлгэцийн өнгө, текст, хэмжээ нүдэнд тааламжтай байсан.',
   },
   {
     type: 'likert',
     id: 'q3_navigation',
-    text: 'Дараагийн хуудас руу шилжих, асуултад хариулах үйлдэл хийхэд саатал дараагаа гайхаж сөргөөгүй, ойлгомжтой байсан.',
+    text: 'Хуудас хооронд шилжих, хариулт өгөх нь ойлгомжтой байсан.',
   },
   {
     type: 'likert',
     id: 'q4_color_palette',
-    text: 'Системийн өнгөний сонголт хичээлдээ анхаарлаа төвлөрүүлэхэд тусайсан, саадгүй байлаа.',
+    text: 'Програмын өнгө анхаарлаа төвлөрүүлэхэд саад болоогүй.',
   },
   {
     type: 'likert',
     id: 'q5_mascot_microlearning',
-    text: 'Мазаалай дүр болон 3-5 минутын богино хичээл нь үргэлжлүүлж суралцах түрхэцтэй.',
+    text: 'Мазаалай дүр ба 3–5 минутын богино хичээл сэтгэл татсан.',
   },
   {
     type: 'open',
     id: 'q6_open_feedback',
-    text: 'Юу нь хамгийн их таалагдсан бэ? Юуг өөрчилбөл бүр илүү гоё, ашиглахад тааламжтай болох вэ?',
+    text: 'Юу хамгийн их таалагдсан бэ? Юуг сайжруулмаар санагдсан бэ?',
     placeholder: 'Чөлөөтэй бичээрэй...',
   },
   {
     type: 'consent',
     id: 'q7_consent',
-    text: 'Дараагийн илүү хөгжүүлсэн хувилбарыг туршиж үзэхэд санал бодлоо хуваалцах боломжтой юу?',
+    text: 'Дараагийн хувилбарыг туршихад оролцох уу?',
   },
 ];
 
-const LIKERT_LABELS = [
-  'Огт санал нийлэхгүй',
-  'Санал нийлэхгүй',
-  'Дунд зэрэг',
-  'Санал нийлж байна',
-  'Бүрэн санал нийлж байна',
+const LIKERT_END_LABELS: [string, string] = [
+  'Огт нийлэхгүй',
+  'Бүрэн нийлнэ',
 ];
 
 export default function SurveyPage() {
@@ -104,14 +99,13 @@ export default function SurveyPage() {
         submitted_at: new Date().toISOString(),
       });
     } catch {
-      // Network/Supabase missing in dev — never block UX on telemetry.
+      // Network/Supabase missing — never block UX on telemetry.
     }
     router.push('/done');
   };
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col px-5 pb-8 pt-6">
-      {/* Progress dots */}
       <div className="flex items-center justify-center gap-1.5">
         {QUESTIONS.map((_, i) => (
           <span
@@ -131,29 +125,28 @@ export default function SurveyPage() {
         <p className="font-mono text-[11px] uppercase tracking-wider text-ink-500">
           Асуулт {step + 1} / {QUESTIONS.length}
         </p>
-        <h1 className="mt-2 font-display text-xl font-bold leading-snug text-ink-900">
+        <h1 className="mt-2 font-display text-lg font-semibold leading-relaxed text-ink-900">
           {q.text}
         </h1>
 
         {q.type === 'likert' && (
-          <div className="mt-8 space-y-3">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <button
-                key={n}
-                type="button"
-                onClick={() => submit(n)}
-                className="flex w-full items-center justify-between rounded-card border border-ink-300/60 bg-paper p-4 active:bg-brand-50"
-              >
-                <span className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 font-display text-base font-bold text-ink-900">
-                    {n}
-                  </span>
-                  <span className="text-left font-display text-sm text-ink-900">
-                    {LIKERT_LABELS[n - 1]}
-                  </span>
-                </span>
-              </button>
-            ))}
+          <div className="mt-10">
+            <div className="flex items-center justify-between gap-2">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => submit(n)}
+                  className="flex h-14 w-14 items-center justify-center rounded-full border border-ink-300/60 bg-paper font-display text-xl font-bold text-ink-900 transition-colors active:bg-info-bg active:border-info-fg"
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 flex justify-between font-mono text-[11px] text-ink-500">
+              <span>{LIKERT_END_LABELS[0]}</span>
+              <span>{LIKERT_END_LABELS[1]}</span>
+            </div>
           </div>
         )}
 

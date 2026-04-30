@@ -55,10 +55,10 @@ export default function LessonIntroPage() {
         />
       </div>
 
-      <h1 className="mt-6 font-display text-3xl font-extrabold leading-tight text-ink-900">
+      <h1 className="mt-6 font-display text-2xl font-extrabold leading-tight text-ink-900">
         {lesson.title_mn}
       </h1>
-      <p className="mt-2 text-sm text-ink-700">{lesson.blurb_mn}</p>
+      <p className="mt-2 text-sm leading-relaxed text-ink-700">{lesson.blurb_mn}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         <Chip icon={<Clock size={14} />} label={`${lesson.minutes} мин`} />
@@ -70,7 +70,7 @@ export default function LessonIntroPage() {
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-500">
           Чи юу сурах вэ
         </p>
-        <ol className="mt-3 space-y-3">
+        <ol className="mt-3 space-y-2.5">
           {lesson.learnings_mn.map((line, idx) => (
             <li key={idx} className="flex items-start gap-3">
               <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 font-display text-xs font-bold text-ink-900">
