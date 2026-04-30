@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { track } from '@/lib/analytics';
+import { DragHint } from './DragHint';
 
 /**
  * ShadowLab — two draggable light sources project shadows of an opaque object onto a wall.
@@ -246,10 +247,7 @@ export function ShadowLab({ surface = 'lab_shadow', onMastery }: Props) {
         </div>
       </div>
 
-      <p className="mt-3 flex items-center gap-2 text-xs text-ink-500">
-        <span aria-hidden>👆</span>
-        <span>Хоёр шар бөмбөгийг чирж сүүдрийг ажигла.</span>
-      </p>
+      <DragHint message="Хоёр шар бөмбөгийг чирж сүүдрийг ажигла." />
     </div>
   );
 }

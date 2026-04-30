@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { track } from '@/lib/analytics';
+import { DragHint } from './DragHint';
 
 /**
  * ReflectionLab — drag the incident ray endpoint to change the angle of incidence.
@@ -212,10 +213,7 @@ export function ReflectionLab({ surface = 'lab_reflection', onMastery }: Props) 
         </span>
       </div>
 
-      <p className="mt-3 flex items-center gap-2 text-center text-xs text-ink-500">
-        <span aria-hidden>👆</span>
-        <span>Шар бөмбөгийг чирж тусах өнцгийг өөрчил.</span>
-      </p>
+      <DragHint message="Шар бөмбөгийг чирж тусах өнцгийг өөрчил." />
     </div>
   );
 }

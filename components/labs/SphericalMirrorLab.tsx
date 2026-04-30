@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { track } from '@/lib/analytics';
+import { DragHint } from './DragHint';
 
 /**
  * SphericalMirrorLab — concave/convex spherical mirror with a draggable object.
@@ -217,10 +218,7 @@ export function SphericalMirrorLab({ surface = 'lab_mirror', onMastery }: Props)
         </Tag>
       </div>
 
-      <p className="mt-3 flex items-center gap-2 text-xs text-ink-500">
-        <span aria-hidden>👆</span>
-        <span>Шар сум-биеийг чирж толинд ойртуул, холдуул.</span>
-      </p>
+      <DragHint message="Шар сум-биеийг чирж толинд ойртуул, холдуул." />
     </div>
   );
 }
