@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check } from 'lucide-react';
 import { track, useTimeOnScreen, getUserId } from '@/lib/analytics';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 /*
   03 · Level Pick (/level)
@@ -51,7 +51,7 @@ export default function LevelPage() {
       window.localStorage.setItem('mzl_level', level);
       window.localStorage.setItem('mzl_goal_min', String(goal));
       
-      if (supabase.supabaseUrl !== 'https://stub.supabase.co') {
+      if (isSupabaseConfigured) {
         const uid = getUserId();
         supabase.from('users').update({
           knowledge_level: level,

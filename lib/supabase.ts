@@ -25,3 +25,5 @@ const anonKey =
 export const supabase = createClient(url, anonKey, {
   auth: { persistSession: false },
 });
+
+export const isSupabaseConfigured = url !== 'https://stub.supabase.co';

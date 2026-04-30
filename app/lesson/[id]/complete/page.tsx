@@ -32,12 +32,23 @@ export default function LessonCompletePage() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const raw = window.sessionStorage.getItem(`quiz:${id}`);
+    let finalScore = 0;
     if (raw) {
       const parsed = JSON.parse(raw) as { score?: number };
-      setScore(parsed.score ?? 0);
+      finalScore = parsed.score ?? 0;
+      setScore(finalScore);
     }
+    
+    // Explicitly track lesson completion
+    track('lesson_completed', {
+      lesson_id: id,
+      score: finalScore,
+      total_questions: questions.length,
+      accuracy: questions.length === 0 ? 0 : Math.round((finalScore / questions.length) * 100)
+    });
+    
     track('view', { surface: 'lesson_complete', lesson: id });
-  }, [id]);
+  }, [id, questions.length]);
 
   const total = questions.length;
   const accuracyPct =

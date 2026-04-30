@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { getUserId, track } from '@/lib/analytics';
 
 export default function LoginPage() {
@@ -30,7 +30,7 @@ export default function LoginPage() {
     
     try {
       // Upsert user into Supabase if we have valid creds (skip for stub)
-      if (supabase.supabaseUrl !== 'https://stub.supabase.co') {
+      if (isSupabaseConfigured) {
         const { error } = await supabase.from('users').upsert({
           client_uid: uid,
           display_name: name,
