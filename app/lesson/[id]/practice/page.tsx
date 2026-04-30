@@ -9,6 +9,7 @@ import { getPractice, type PracticeDrill } from '@/lib/practice';
 import { TapMatch } from '@/components/practice/TapMatch';
 import { TrueFalse } from '@/components/practice/TrueFalse';
 import { Sequence } from '@/components/practice/Sequence';
+import type { DrillStats } from '@/components/practice/types';
 import { track, useTimeOnScreen } from '@/lib/analytics';
 
 /*
@@ -35,8 +36,15 @@ export default function PracticePage() {
   const drill = drills[idx];
   const isLast = idx === drills.length - 1;
 
-  const onComplete = () => {
-    track('practice_drill_done', { lesson: id, drill: drill.id });
+  const onComplete = (stats: DrillStats) => {
+    track('practice_drill_done', {
+      lesson: id,
+      drill_id: drill.id,
+      drill_kind: drill.kind,
+      correct_count: stats.correct,
+      wrong_count: stats.wrong,
+      duration_ms: stats.durationMs,
+    });
     if (isLast) {
       router.push(`/quiz?lesson=${id}&q=1`);
     } else {
@@ -91,7 +99,7 @@ function DrillBody({
   onComplete,
 }: {
   drill: PracticeDrill;
-  onComplete: () => void;
+  onComplete: (stats: DrillStats) => void;
 }) {
   switch (drill.kind) {
     case 'tap_match':

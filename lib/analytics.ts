@@ -118,6 +118,21 @@ export function track(event: string, meta: EventMeta = {}): void {
           .then(({ error }) => {
             if (error) console.warn('[track] quiz_answers insert failed:', error.message);
           });
+      } else if (event === 'practice_drill_done') {
+        supabase
+          .from('practice_attempts')
+          .insert({
+            client_uid: uid,
+            lesson_id: asString(meta.lesson) ?? '',
+            drill_id: asString(meta.drill_id) ?? '',
+            drill_kind: asString(meta.drill_kind),
+            correct_count: asNumber(meta.correct_count) ?? 0,
+            wrong_count: asNumber(meta.wrong_count) ?? 0,
+            duration_ms: asNumber(meta.duration_ms) ?? null,
+          })
+          .then(({ error }) => {
+            if (error) console.warn('[track] practice_attempts insert failed:', error.message);
+          });
       }
     })
     .catch(() => {

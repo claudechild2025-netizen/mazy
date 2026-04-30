@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { MascotBubble } from '@/components/MascotBubble';
 import { track } from '@/lib/analytics';
+import type { DrillStats } from './types';
 
 /*
   Tinder-flavoured Тийм/Үгүй drill. Statements come in one at a time.
@@ -16,7 +17,7 @@ type Props = {
   drillId: string;
   statements: Statement[];
   mascotError: string;
-  onComplete: () => void;
+  onComplete: (stats: DrillStats) => void;
 };
 
 export function TrueFalse({ drillId, statements, mascotError, onComplete }: Props) {
@@ -24,15 +25,25 @@ export function TrueFalse({ drillId, statements, mascotError, onComplete }: Prop
   const [shake, setShake] = useState<'yes' | 'no' | null>(null);
   const [errorVisible, setErrorVisible] = useState(false);
 
+  const startedAt = useRef<number>(performance.now());
+  const correctRef = useRef(0);
+  const wrongRef = useRef(0);
+
   const stmt = statements[idx];
 
   const answer = (chosen: boolean) => {
     if (chosen === stmt.correct) {
+      correctRef.current += 1;
       track('practice_pair_correct', { drill: drillId, stmt: idx });
       const next = idx + 1;
       if (next >= statements.length) {
         track('practice_complete', { drill: drillId, kind: 'true_false' });
-        setTimeout(onComplete, 250);
+        const stats: DrillStats = {
+          correct: correctRef.current,
+          wrong: wrongRef.current,
+          durationMs: Math.round(performance.now() - startedAt.current),
+        };
+        setTimeout(() => onComplete(stats), 250);
       } else {
         setIdx(next);
         setErrorVisible(false);
@@ -40,6 +51,7 @@ export function TrueFalse({ drillId, statements, mascotError, onComplete }: Prop
     } else {
       setShake(chosen ? 'yes' : 'no');
       setErrorVisible(true);
+      wrongRef.current += 1;
       track('practice_pair_wrong', { drill: drillId, stmt: idx });
       window.setTimeout(() => setShake(null), 400);
       window.setTimeout(() => setErrorVisible(false), 2800);

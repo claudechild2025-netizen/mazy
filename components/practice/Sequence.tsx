@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { MascotBubble } from '@/components/MascotBubble';
 import { track } from '@/lib/analytics';
+import type { DrillStats } from './types';
 
 /*
   Sequence-order drill. Steps are shuffled. Tapping in the correct order
@@ -14,7 +15,7 @@ type Props = {
   drillId: string;
   steps: string[];
   mascotError: string;
-  onComplete: () => void;
+  onComplete: (stats: DrillStats) => void;
 };
 
 function shuffle<T>(arr: T[], seed: string): T[] {
@@ -35,20 +36,31 @@ export function Sequence({ drillId, steps, mascotError, onComplete }: Props) {
   const [shake, setShake] = useState<number | null>(null);
   const [errorVisible, setErrorVisible] = useState(false);
 
+  const startedAt = useRef<number>(performance.now());
+  const correctRef = useRef(0);
+  const wrongRef = useRef(0);
+
   const tap = (idx: number) => {
     if (done.includes(idx)) return;
     const expected = done.length;
     if (idx === expected) {
       const next = [...done, idx];
       setDone(next);
+      correctRef.current += 1;
       track('practice_pair_correct', { drill: drillId, step: idx });
       if (next.length === steps.length) {
         track('practice_complete', { drill: drillId, kind: 'sequence' });
-        setTimeout(onComplete, 350);
+        const stats: DrillStats = {
+          correct: correctRef.current,
+          wrong: wrongRef.current,
+          durationMs: Math.round(performance.now() - startedAt.current),
+        };
+        setTimeout(() => onComplete(stats), 350);
       }
     } else {
       setShake(idx);
       setErrorVisible(true);
+      wrongRef.current += 1;
       track('practice_pair_wrong', { drill: drillId, step: idx });
       window.setTimeout(() => setShake(null), 400);
       window.setTimeout(() => setErrorVisible(false), 2800);

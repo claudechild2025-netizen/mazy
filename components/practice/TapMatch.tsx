@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { MascotBubble } from '@/components/MascotBubble';
 import { track } from '@/lib/analytics';
+import type { DrillStats } from './types';
 
 /*
   Tap-to-pair drill. Two columns. Tap a left chip to select, then tap a
@@ -16,7 +17,7 @@ type Props = {
   drillId: string;
   pairs: Pair[];
   mascotError: string;
-  onComplete: () => void;
+  onComplete: (stats: DrillStats) => void;
 };
 
 function shuffle<T>(arr: T[], seed: string): T[] {
@@ -41,6 +42,10 @@ export function TapMatch({ drillId, pairs, mascotError, onComplete }: Props) {
   const [shake, setShake] = useState<{ l: number | null; r: number | null }>({ l: null, r: null });
   const [errorVisible, setErrorVisible] = useState(false);
 
+  const startedAt = useRef<number>(performance.now());
+  const correctRef = useRef(0);
+  const wrongRef = useRef(0);
+
   const tapLeft = (idx: number) => {
     if (matched.has(idx)) return;
     setSelectedLeft(idx);
@@ -53,14 +58,21 @@ export function TapMatch({ drillId, pairs, mascotError, onComplete }: Props) {
       next.add(idx);
       setMatched(next);
       setSelectedLeft(null);
+      correctRef.current += 1;
       track('practice_pair_correct', { drill: drillId });
       if (next.size === pairs.length) {
         track('practice_complete', { drill: drillId, kind: 'tap_match' });
-        setTimeout(onComplete, 350);
+        const stats: DrillStats = {
+          correct: correctRef.current,
+          wrong: wrongRef.current,
+          durationMs: Math.round(performance.now() - startedAt.current),
+        };
+        setTimeout(() => onComplete(stats), 350);
       }
     } else {
       setShake({ l: selectedLeft, r: idx });
       setErrorVisible(true);
+      wrongRef.current += 1;
       track('practice_pair_wrong', { drill: drillId });
       window.setTimeout(() => setShake({ l: null, r: null }), 400);
       window.setTimeout(() => setErrorVisible(false), 2800);
