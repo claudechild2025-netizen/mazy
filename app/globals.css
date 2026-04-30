@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Mazy v2 — design tokens derived from the hi-fi prototype.
+  60% white surfaces · 25% warm yellow brand · 10% black CTAs · 5% functional state palette.
+  Each token is a CSS variable so a Tailwind class like `bg-brand-100` resolves through
+  globals.css. To rebrand later, swap the values here — every screen follows.
+*/
+@layer base {
+  :root {
+    /* Surfaces */
+    --color-paper:      255 255 255;
+    --color-cream-50:   255 252 245;
+
+    /* Brand yellow (light = topic, warm = teen-friendly without being childish) */
+    --color-brand-50:   254 249 231;
+    --color-brand-100:  252 237 160;
+    --color-brand-300:  244 214  59;
+    --color-brand-500:  232 180   0;
+
+    /* Ink — primary text and the black commitment-CTA pill */
+    --color-ink-900:     26  26  26;
+    --color-ink-700:     74  74  74;
+    --color-ink-500:    138 138 138;
+    --color-ink-300:    210 210 210;
+
+    /* Functional state colors — Signaling Principle (Mayer 2009).
+       Each color carries categorical meaning: blue=interactivity,
+       green=success, red=error, orange=streak/heat. */
+    --color-info-bg:    219 234 254;
+    --color-info-fg:     37  99 235;
+
+    --color-success-bg: 220 252 231;
+    --color-success-fg:  22 163  74;
+
+    --color-error-bg:   252 231 229;
+    --color-error-fg:   220  38  38;
+
+    --color-heat-bg:    255 234 213;
+    --color-heat-fg:    249 115  22;
+
+    /* v4 pastel quad-tile colors — category identity on Home + Progress.
+       streak=peach, xp=cream, lessons=sky, trophy=mint. */
+    --color-pastel-peach-bg: 255 228 214;
+    --color-pastel-peach-fg: 249 115  22;
+    --color-pastel-cream-bg: 254 243 199;
+    --color-pastel-cream-fg: 232 180   0;
+    --color-pastel-sky-bg:   219 234 254;
+    --color-pastel-sky-fg:    37  99 235;
+    --color-pastel-mint-bg:  209 250 229;
+    --color-pastel-mint-fg:   22 163  74;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Tap highlight respects brand */
+  * {
+    -webkit-tap-highlight-color: rgb(var(--color-brand-300) / 0.25);
+  }
+
+  /* Accessibility: reduced motion (lab animations + Framer transitions respect this) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* The brand yellow gradient used on Splash and the "today's lesson" hero card on Home */
+@layer utilities {
+  .bg-brand-gradient {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-brand-50)) 0%,
+      rgb(var(--color-brand-100)) 100%
+    );
+  }
+}
