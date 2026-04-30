@@ -21,7 +21,6 @@ const FILTERS = [
   { key: 'all', label: 'Бүгд' },
   { key: 'todo', label: 'Дуусаагүй' },
   { key: 'done', label: 'Дууссан' },
-  { key: 'locked', label: 'Хаалттай' },
 ] as const;
 
 type FilterKey = (typeof FILTERS)[number]['key'];
@@ -35,11 +34,9 @@ export default function LessonsPage() {
       case 'all':
         return true;
       case 'todo':
-        return !l.locked && !l.done;
+        return !l.done;
       case 'done':
-        return l.done;
-      case 'locked':
-        return l.locked;
+        return Boolean(l.done);
     }
   });
 
@@ -48,11 +45,14 @@ export default function LessonsPage() {
       <div className="flex flex-1 flex-col gap-5 px-5 pt-8 pb-6">
         <header>
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-500">
-            05 · ХИЧЭЭЛ
+            ХИЧЭЭЛ
           </p>
           <h1 className="mt-1 font-display text-2xl font-extrabold text-ink-900">
             Гэрэл — 1-р сэдэв
           </h1>
+          <p className="mt-1 text-xs text-ink-500">
+            {LESSONS.length} хичээл · бүгд нээлттэй
+          </p>
         </header>
 
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
