@@ -140,16 +140,22 @@ export const DISTILL_BY_LESSON: Record<string, DistillCard[]> = {
     },
     {
       id: 'pr2',
-      headline_mn: 'Призмээр өнгө бүр өөр өнцгөөр хугардаг.',
+      headline_mn: 'Призм — гэрлийг задалдаг шил.',
       icon: '🔺',
     },
     {
       id: 'pr3',
+      headline_mn: 'Өнгө бүр өөр өнцгөөр хугардаг.',
+      detail_mn: 'Улаан хамгийн бага, ягаан хамгийн их өнцгөөр.',
+      icon: '🎨',
+    },
+    {
+      id: 'pr4',
       headline_mn: 'Энэ үзэгдлийг — Дисперс гэнэ.',
       icon: '🌈',
     },
     {
-      id: 'pr4',
+      id: 'pr5',
       headline_mn: 'Усны дусал = Бяцхан призм → Солонго.',
       icon: '💧',
     },

@@ -121,6 +121,17 @@ export const PRACTICE_BY_LESSON: Record<string, PracticeDrill[]> = {
       ],
       mascot_error_mn: 'Нягт→сийрэг үед хэвийн ШУГАМААС ХОЛДОНО!',
     },
+    {
+      kind: 'sequence',
+      id: 'rf_d3',
+      title_mn: 'Хугарлын алхам.',
+      steps: [
+        'Гэрэл агаараар тархав',
+        'Усны гадаргуу дээр тулав',
+        'Хурд буурч хугарав',
+      ],
+      mascot_error_mn: 'Эхлээд хүрнэ, дараа нь хугарна.',
+    },
   ],
   lenses: [
     {
@@ -159,8 +170,20 @@ export const PRACTICE_BY_LESSON: Record<string, PracticeDrill[]> = {
   ],
   prism: [
     {
-      kind: 'true_false',
+      kind: 'tap_match',
       id: 'p_d1',
+      title_mn: 'Ойлголтыг тааруул.',
+      pairs: [
+        { left: 'Цагаан гэрэл', right: '7 өнгөний нийлбэр' },
+        { left: 'Призм', right: 'Гэрэл задлагч' },
+        { left: 'Дисперс', right: 'Өнгөнд задрах үзэгдэл' },
+        { left: 'Солонго', right: 'Усны дусал = бяцхан призм' },
+      ],
+      mascot_error_mn: 'Призм бол гэрлийг өнгөнд задалдаг шил!',
+    },
+    {
+      kind: 'true_false',
+      id: 'p_d2',
       title_mn: 'Призм ба өнгө.',
       statements: [
         { text_mn: 'Цагаан гэрэл бол 7 өнгөний нийлбэр.', correct: true },
@@ -171,7 +194,7 @@ export const PRACTICE_BY_LESSON: Record<string, PracticeDrill[]> = {
     },
     {
       kind: 'sequence',
-      id: 'p_d2',
+      id: 'p_d3',
       title_mn: 'Дисперсийн дараалал.',
       steps: ['Цагаан гэрэл туссан', 'Призмээр дамжсан', '7 өнгөнд задарсан'],
       mascot_error_mn: 'Эхлээд тусна, дараа нь задарна.',
