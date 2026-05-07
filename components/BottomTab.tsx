@@ -40,7 +40,7 @@ export function BottomTab() {
             key={href}
             href={href}
             onClick={() => track('tab_tap', { tab: label, from: pathname })}
-            className="flex flex-1 flex-col items-center justify-center gap-1 pt-2 pb-3"
+            className="flex flex-1 flex-col items-center justify-center gap-1 pt-2 pb-3 transition-transform active:scale-95"
           >
             <span
               className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
@@ -49,7 +49,7 @@ export function BottomTab() {
             >
               <Icon
                 size={22}
-                strokeWidth={isActive ? 2.4 : 1.8}
+                strokeWidth={isActive ? 2.2 : 2.0}
                 // Tailwind can't read CSS vars on SVG `color`, so we set inline
                 style={{
                   color: isActive

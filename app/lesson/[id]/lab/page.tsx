@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ReflectionLab } from '@/components/labs/ReflectionLab';
 import { ShadowLab } from '@/components/labs/ShadowLab';
 import { SphericalMirrorLab } from '@/components/labs/SphericalMirrorLab';
+import { PrismLab } from '@/components/labs/PrismLab';
 import { getLesson } from '@/lib/lessons';
 import { track, useTimeOnScreen } from '@/lib/analytics';
 
@@ -72,6 +73,8 @@ function LabBody({ lesson }: { lesson: ReturnType<typeof getLesson> }) {
       return <ShadowLab surface={`lesson_lab:${lesson.id}`} />;
     case 'spherical-mirror':
       return <SphericalMirrorLab surface={`lesson_lab:${lesson.id}`} />;
+    case 'prism':
+      return <PrismLab surface={`lesson_lab:${lesson.id}`} />;
   }
 
   // TODO(dw): interactivity below standard, see ReflectionLab.tsx comment.

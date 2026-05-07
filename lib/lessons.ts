@@ -24,7 +24,7 @@ export type Lesson = {
   // v4: each lesson has a single primary lab (the lab IS the lesson). When
   // unset the /lesson/[id]/lab route renders a static placeholder marked
   // with TODO(dw): interactivity below standard.
-  lab?: 'reflection' | 'shadow' | 'spherical-mirror';
+  lab?: 'reflection' | 'shadow' | 'spherical-mirror' | 'prism';
 };
 
 export type LessonStep = {
@@ -37,7 +37,7 @@ export type LessonStep = {
   // the step content). When set, the step page swaps the static illustration
   // for the matching seed component. Steps without a slug fall back to the
   // static illustration with a TODO(dw): interactivity below standard.
-  lab?: 'reflection' | 'shadow' | 'spherical-mirror';
+  lab?: 'reflection' | 'shadow' | 'spherical-mirror' | 'prism';
 };
 
 /*
@@ -132,6 +132,7 @@ export const LESSONS: Lesson[] = [
     minutes: 4,
     steps: 3,
     xp: 25,
+    lab: 'prism',
     learnings_mn: [
       'Цагаан гэрэл нь 7 өнгийн нийлбэр',
       'Призм гэрлийг өнгөнд задалдаг (дисперс)',
@@ -252,6 +253,7 @@ export const STEPS_BY_LESSON: Record<string, LessonStep[]> = {
       body_mn:
         'Призмээр дамжихад өнгө бүр өөр өнцгөөр хугардаг тул цагаан гэрэл салангид өнгөнд задарна. Үүнийг дисперс гэнэ.',
       visual: 'refraction',
+      lab: 'prism',
     },
     {
       id: 3,

@@ -115,10 +115,10 @@ export default function HomePage() {
           className="bg-brand-gradient block rounded-card p-5 shadow-hero"
         >
           <div className="flex items-center gap-2">
-            <span className="rounded-pill bg-paper/80 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-900">
+            <span className="rounded-pill bg-white px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wider text-ink-900 shadow-sm">
               Дараагийн хичээл
             </span>
-            <span className="rounded-pill bg-paper/80 px-3 py-1 font-mono text-xs font-medium text-ink-900">
+            <span className="rounded-pill bg-white px-3 py-1 font-mono text-xs font-bold text-ink-900 shadow-sm">
               5 мин
             </span>
           </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
             <span className="font-mono text-xs text-ink-700">⭐ +30 XP</span>
             <span className="font-mono text-xs text-ink-700">🟢 Хялбар</span>
           </div>
-          <div className="mt-4 flex h-12 items-center justify-center gap-2 rounded-pill bg-ink-900 font-display text-base font-semibold text-paper">
+          <div className="mt-4 flex h-12 items-center justify-center gap-2 rounded-pill bg-ink-900 font-display text-base font-semibold text-paper active:scale-[0.98] transition-transform">
             Хичээлийг эхлэх
             <ArrowRight size={18} strokeWidth={2.2} />
           </div>

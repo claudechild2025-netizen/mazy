@@ -102,10 +102,10 @@ export default function ProfilePage() {
   return (
     <>
       <div className="flex flex-1 flex-col gap-5 px-5 pt-8 pb-6">
-        <header>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-500">
+        <header className="flex justify-center mb-[-8px]">
+          <h1 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-ink-700">
             ПРОФАЙЛ
-          </p>
+          </h1>
         </header>
 
         <div className="flex items-center gap-4">
@@ -185,7 +185,7 @@ export default function ProfilePage() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="flex w-full items-center gap-3 rounded-card border border-ink-300/60 bg-paper px-4 py-3 text-left"
+                className="flex w-full items-center gap-3 rounded-card border border-ink-300/60 bg-paper px-4 py-3 text-left active:scale-[0.98] active:bg-ink-300/10 transition-transform"
               >
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-paper">
                   <LogOut size={18} strokeWidth={2} className="text-ink-700" />
@@ -224,7 +224,7 @@ function RowLink({
   external?: boolean;
 }) {
   const className =
-    'flex w-full items-center gap-3 rounded-card border border-ink-300/60 bg-paper px-4 py-3 text-left';
+    'flex w-full items-center gap-3 rounded-card border border-ink-300/60 bg-paper px-4 py-3 text-left active:scale-[0.98] active:bg-ink-300/10 transition-transform';
   const inner = (
     <>
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100">

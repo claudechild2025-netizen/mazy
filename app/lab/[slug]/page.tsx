@@ -7,6 +7,7 @@ import { BottomTab } from '@/components/BottomTab';
 import { ReflectionLab } from '@/components/labs/ReflectionLab';
 import { ShadowLab } from '@/components/labs/ShadowLab';
 import { SphericalMirrorLab } from '@/components/labs/SphericalMirrorLab';
+import { PrismLab } from '@/components/labs/PrismLab';
 import { track, useTimeOnScreen } from '@/lib/analytics';
 
 /*
@@ -34,7 +35,7 @@ const LABS = [
   { slug: 'moon-phases',      short: 'Сар',          title: 'Сарны үе' },
 ];
 
-const BUILT = new Set(['reflection', 'shadow', 'spherical-mirror']);
+const BUILT = new Set(['reflection', 'shadow', 'spherical-mirror', 'prism']);
 
 export default function LabPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -93,6 +94,8 @@ export default function LabPage() {
           <ReflectionLab surface="lab_reflection" />
         ) : lab.slug === 'shadow' ? (
           <ShadowLab surface="lab_shadow" />
+        ) : lab.slug === 'prism' ? (
+          <PrismLab surface="lab_prism" />
         ) : (
           <SphericalMirrorLab surface="lab_mirror" />
         )}

@@ -26,13 +26,13 @@ export function StatTile({
   const s = STYLES[category];
   return (
     <div
-      className={`${s.bg} flex flex-col items-center justify-center rounded-card py-4`}
+      className={`${s.bg} flex flex-col items-center justify-center rounded-card py-4 border border-black/5 shadow-sm`}
     >
       <span className="text-2xl" aria-hidden>{emoji}</span>
       <p className="mt-1 font-display text-2xl font-extrabold text-ink-900">
         {value}
       </p>
-      <p className={`font-mono text-[11px] uppercase tracking-wider ${s.fg}`}>
+      <p className={`font-mono text-[11px] font-bold uppercase tracking-wider ${s.fg}`}>
         {label}
       </p>
     </div>

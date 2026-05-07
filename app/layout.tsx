@@ -59,13 +59,13 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="min-h-dvh bg-paper text-ink-900 font-body antialiased">
+      <body className="min-h-dvh bg-cream-50 text-ink-900 font-body antialiased">
         {/*
           Mobile-first: max-width 480px keeps reading width comfortable on
           tablet/desktop while preserving the iPhone 14-class composition the
           hi-fi was designed against (390×844).
         */}
-        <div className="mx-auto flex min-h-dvh w-full max-w-[480px] flex-col">
+        <div className="mx-auto flex min-h-dvh w-full max-w-[480px] flex-col bg-paper shadow-2xl border-x border-ink-300/20 relative overflow-hidden">
           {children}
         </div>
       </body>

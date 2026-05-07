@@ -112,10 +112,10 @@ export default function SurveyPage() {
             key={i}
             className={
               i < step
-                ? 'h-2 w-2 rounded-full bg-success-fg'
+                ? 'h-2.5 w-2.5 rounded-full bg-success-fg'
                 : i === step
-                  ? 'h-2 w-2 rounded-full bg-ink-900'
-                  : 'h-2 w-2 rounded-full bg-ink-300'
+                  ? 'h-2.5 w-2.5 rounded-full bg-ink-900'
+                  : 'h-2.5 w-2.5 rounded-full bg-ink-300'
             }
           />
         ))}
@@ -130,14 +130,14 @@ export default function SurveyPage() {
         </h1>
 
         {q.type === 'likert' && (
-          <div className="mt-10">
+          <div className="mt-6">
             <div className="flex items-center justify-between gap-2">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
                   key={n}
                   type="button"
                   onClick={() => submit(n)}
-                  className="flex h-14 w-14 items-center justify-center rounded-full border border-ink-300/60 bg-paper font-display text-xl font-bold text-ink-900 transition-colors active:bg-info-bg active:border-info-fg"
+                  className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-ink-300/60 bg-paper font-display text-xl font-bold text-ink-900 transition-all active:scale-95 active:bg-info-bg active:border-info-fg shadow-sm"
                 >
                   {n}
                 </button>
